@@ -10,7 +10,7 @@
 #include "neighbors.h"
 #include "display.h"
 
-// Activate for a LOT of debug output
+/* Activate for a LOT of debug output */
 #define DEBUG 0
 
 int euclidean(int dx, int dy)
@@ -45,7 +45,7 @@ int *_jump(struct grid *gd, int x, int y, int px, int py, struct node *endNode)
 		if (DEBUG)
 			printf("	_jump(1) return value: x:%d/y:%d\n", x, y);
 		int *i = (int *) malloc(2 * sizeof(int));
-		malloc_count++; // [ Malloc Count ]
+		malloc_count++; /* [ Malloc Count ] */
 		i[0] = x;
 		i[1] = y;
 		return i;
@@ -57,7 +57,7 @@ int *_jump(struct grid *gd, int x, int y, int px, int py, struct node *endNode)
 			if (DEBUG)
 				printf("	_jump(2) return value: x:%d/y:%d\n", x, y);
 			int *i = (int *) malloc(2 * sizeof(int));
-			malloc_count++;         // [ Malloc Count ]
+			malloc_count++;         /* [ Malloc Count ] */
 			i[0] = x;
 			i[1] = y;
 			return i;
@@ -69,7 +69,7 @@ int *_jump(struct grid *gd, int x, int y, int px, int py, struct node *endNode)
 				if (DEBUG)
 					printf("	_jump(3) return value: x:%d/y:%d\n", x, y);
 				int *i = (int *) malloc(2 * sizeof(int));
-				malloc_count++;         // [ Malloc Count ]
+				malloc_count++;         /* [ Malloc Count ] */
 				i[0] = x;
 				i[1] = y;
 				return i;
@@ -80,7 +80,7 @@ int *_jump(struct grid *gd, int x, int y, int px, int py, struct node *endNode)
 				if (DEBUG)
 					printf("	_jump(4) return value: x:%d/y:%d\n", x, y);
 				int *i = (int *) malloc(2 * sizeof(int));
-				malloc_count++;         // [ Malloc Count ]
+				malloc_count++;         /* [ Malloc Count ] */
 				i[0] = x;
 				i[1] = y;
 				return i;
@@ -101,15 +101,15 @@ int *_jump(struct grid *gd, int x, int y, int px, int py, struct node *endNode)
 
 			if (jx) {
 				free(jx);
-				malloc_count--; // [ Malloc Count ]
+				malloc_count--; /* [ Malloc Count ] */
 			}
 			if (jy) {
 				free(jy);
-				malloc_count--; // [ Malloc Count ]
+				malloc_count--; /* [ Malloc Count ] */
 			}
 
 			int *i = (int *) malloc(2 * sizeof(int));
-			malloc_count++; // [ Malloc Count ]
+			malloc_count++; /* [ Malloc Count ] */
 			i[0] = x;
 			i[1] = y;
 			return i;
@@ -154,7 +154,7 @@ void _identifySuccessors(struct grid *gd, struct node *activeNode, struct open_l
 			jy = jumpPoint[1];
 
 			free(jumpPoint);
-			malloc_count--; // [ Malloc Count ]
+			malloc_count--; /* [ Malloc Count ] */
 
 			jumpNode = getNodeAt(gd, jx, jy);
 			if (jumpNode->closed) {
@@ -167,7 +167,7 @@ void _identifySuccessors(struct grid *gd, struct node *activeNode, struct open_l
 				jumpNode->g = ng;
 				if (!jumpNode->h)
 					jumpNode->h = manhattan(abs(jx - endX), abs(jy - endY));
-				//jumpNode->h = jumpNode->h || manhattan(abs(jx - endX), abs(jy - endY)); // ASK FIDELIS !!
+				/* jumpNode->h = jumpNode->h || manhattan(abs(jx - endX), abs(jy - endY)); // ASK FIDELIS !! */
 				jumpNode->f = jumpNode->g + jumpNode->h;
 				if (DEBUG)
 					printf("Node g:%d h:%d f:%d\n", jumpNode->g, jumpNode->h, jumpNode->f);
@@ -206,7 +206,7 @@ struct neighbor_xy_list *findPath(struct grid *gd, int startX, int startY, int e
 	struct node *activeNode;
 	int counter = 0;
 
-	// Initialize the start node
+	/* Initialize the start node */
 	startNode->h = 0;
 	startNode->g = 0;
 	startNode->f = 0;
@@ -219,7 +219,7 @@ struct neighbor_xy_list *findPath(struct grid *gd, int startX, int startY, int e
 	head = ol_listsort(head);
 	current = head->left;
 
-	while (head != current) { // List is empty when current marker rests on head
+	while (head != current) { /* List is empty when current marker rests on head */
 		if (DEBUG)
 			printf("Cycle %d\n", counter);
 
@@ -233,9 +233,9 @@ struct neighbor_xy_list *findPath(struct grid *gd, int startX, int startY, int e
 			return goal;
 		}
 
-		// Begin identifying successors...
+		/* Begin identifying successors... */
 		_identifySuccessors(gd, activeNode, current, endNode);
-		head = ol_listsort(head);               // Instead of sorting it everytime a item is added, I will sort when I need to grab the lowest value.
+		head = ol_listsort(head);               /* Instead of sorting it everytime a item is added, I will sort when I need to grab the lowest value. */
 		current = head->right;
 
 		if (DEBUG) {
@@ -265,31 +265,31 @@ struct neighbor_xy_list *smooth_path(struct grid *gd, struct neighbor_xy_list *h
 		yi = pos->y;
 		dx = xi - pos->right->x;
 		dy = yi - pos->right->y;
-		if (dx == 1 && dy == -1) { // Up & Right
+		if (dx == 1 && dy == -1) { /* Up & Right */
 			if (!isWalkableAt(gd, xi, yi + 1)) {
 				pos = neighbor_xy_insert_right(pos, pos->x - 1, pos->y);
 			} else if (!isWalkableAt(gd, xi - 1, yi)) {
 				pos = neighbor_xy_insert_right(pos, pos->x, pos->y + 1);
 			}
-		} else if (dx == 1 && dy == 1)    { // Down & Right
+		} else if (dx == 1 && dy == 1) {    /* Down & Right */
 			if (!isWalkableAt(gd, xi - 1, yi)) {
 				pos = neighbor_xy_insert_right(pos, pos->x, pos->y - 1);
 			} else if (!isWalkableAt(gd, xi, yi - 1)) {
 				pos = neighbor_xy_insert_right(pos, pos->x - 1, pos->y);
 			}
-		} else if (dx == -1 && dy == 1)    { // Down & Left
+		} else if (dx == -1 && dy == 1) {    /* Down & Left */
 			if (!isWalkableAt(gd, xi, yi - 1)) {
 				pos = neighbor_xy_insert_right(pos, pos->x + 1, pos->y);
 			} else if (!isWalkableAt(gd, xi + 1, yi)) {
 				pos = neighbor_xy_insert_right(pos, pos->x, pos->y - 1);
 			}
-		} else if (dx == -1 && dy == -1)    { // Up & Left
+		} else if (dx == -1 && dy == -1) {    /* Up & Left */
 			if (!isWalkableAt(gd, xi + 1, yi)) {
 				pos = neighbor_xy_insert_right(pos, pos->x, pos->y + 1);
 			} else if (!isWalkableAt(gd, xi, yi + 1)) {
 				pos = neighbor_xy_insert_right(pos, pos->x + 1, pos->y);
 			}
-		} else if (abs(dx) > 1 || abs(dy) > 1)    {
+		} else if (abs(dx) > 1 || abs(dy) > 1) {
 			int incrX = dx / max(abs(dx), 1);
 			int incrY = dy / max(abs(dy), 1);
 			pos = neighbor_xy_insert_right(pos, pos->right->x + incrX, pos->right->y + incrY);

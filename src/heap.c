@@ -24,7 +24,7 @@ int cmp(struct open_list *one, struct open_list *two)
 struct open_list *ol_new()
 {
 	struct open_list *newlist = (struct open_list *) malloc(sizeof(struct open_list));
-	malloc_count++; // [ Malloc Count ]
+	malloc_count++; /* [ Malloc Count ] */
 	newlist->right = newlist;
 	newlist->left = newlist;
 	newlist->list_node = NULL;
@@ -39,7 +39,7 @@ void ol_clean(struct open_list *head)
 		do {
 			tmp = pos->right;
 			free(pos);
-			malloc_count--; // [ Malloc Count ]
+			malloc_count--; /* [ Malloc Count ] */
 			pos = tmp;
 		} while (pos != head);
 	}
@@ -48,7 +48,7 @@ void ol_clean(struct open_list *head)
 struct open_list *ol_insert_right(struct open_list *list, struct node *data)
 {
 	struct open_list *newlist = (struct open_list *) malloc(sizeof(struct open_list));
-	malloc_count++;         // [ Malloc Count ]
+	malloc_count++;         /* [ Malloc Count ] */
 	newlist->list_node = data;
 	newlist->left = list;
 	newlist->right = list->right;
@@ -63,7 +63,7 @@ struct open_list *ol_del_free(struct open_list *list)
 	list->right->left = list->left;
 	list->left->right = list->right;
 	free(list);
-	malloc_count--; // [ Malloc Count ]
+	malloc_count--; /* [ Malloc Count ] */
 	return res;
 }
 

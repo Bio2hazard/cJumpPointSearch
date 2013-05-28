@@ -9,21 +9,21 @@
 #include "display.h"
 #include "heap.h"
 
-// Malloc count is used to make sure the program cleans up properly after itself.
-// This value gets increased for every "malloc", and reduced for every "free".
+/* Malloc count is used to make sure the program cleans up properly after itself. */
+/* This value gets increased for every "malloc", and reduced for every "free". */
 int malloc_count = 0;
 
 void test()
 {
-	int i, width = 100, height = 100, startX = 0, startY = 0, endX = 0, endY = 0; // Set the size of the map
+	int i, width = 100, height = 100, startX = 0, startY = 0, endX = 0, endY = 0; /* Set the size of the map */
 
-	// Prepare the Matrix of Walkable / Not Walkable - Dynamic Size
+	/* Prepare the Matrix of Walkable / Not Walkable - Dynamic Size */
 	bool **matrix;
 	matrix = (bool **) malloc(height * sizeof(bool *));
-	malloc_count++; // [ Malloc Count ]
+	malloc_count++; /* [ Malloc Count ] */
 	for (int i = 0; i < height; i++) {
 		matrix[i] = (bool *)malloc(width * sizeof(bool));
-		malloc_count++; // [ Malloc Count ]
+		malloc_count++; /* [ Malloc Count ] */
 	}
 	FILE *file = fopen ("map_in.txt", "r");
 	char c;
@@ -59,7 +59,7 @@ void test()
 	}
 
 	struct grid newgrid;
-	newgrid = createGrid(width, height, matrix); // Create a new grid
+	newgrid = createGrid(width, height, matrix); /* Create a new grid */
 
 	clock_t c0 = clock();
 
@@ -76,8 +76,8 @@ void test()
 	system("Pause");
 #endif
 
-	// Use displayGrid to display the map without the path
-	//displayGrid(newgrid);
+	/* Use displayGrid to display the map without the path */
+	/* displayGrid(newgrid); */
 
 	path_head = smooth_path(&newgrid, path_head);
 	path_pos = path_head;
@@ -95,23 +95,23 @@ void test()
 		displaySolution(&newgrid, path_head);
 	}
 
-	// Cleanup - Free all created arrays.
+	/* Cleanup - Free all created arrays. */
 	neighbor_xy_clean(path_head);
 
 	for (i = 0; i < height; i++) {
 		free(newgrid.nodes[i]);
-		malloc_count--; // [ Malloc Count ]
+		malloc_count--; /* [ Malloc Count ] */
 	}
 
 	free(newgrid.nodes);
-	malloc_count--; // [ Malloc Count ]
+	malloc_count--; /* [ Malloc Count ] */
 
 	for (i = 0; i < height; i++) {
 		free(matrix[i]);
-		malloc_count--; // [ Malloc Count ]
+		malloc_count--; /* [ Malloc Count ] */
 	}
 	free(matrix);
-	malloc_count--; // [ Malloc Count ]
+	malloc_count--; /* [ Malloc Count ] */
 
 	printf("Malloc count is:%d\n", malloc_count);
 #ifdef _WIN32

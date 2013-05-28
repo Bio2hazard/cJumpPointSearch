@@ -5,7 +5,7 @@
 struct neighbor_list *new_neighbor_list()
 {
 	struct neighbor_list *newlist = (struct neighbor_list *) malloc(sizeof(struct neighbor_list));
-	malloc_count++; // [ Malloc Count ]
+	malloc_count++; /* [ Malloc Count ] */
 	newlist->right = newlist;
 	newlist->left = newlist;
 	newlist->neighbor_node = NULL;
@@ -20,7 +20,7 @@ void clean_neighbor_list(struct neighbor_list *head)
 		do {
 			tmp = pos->right;
 			free(pos);
-			malloc_count--; // [ Malloc Count ]
+			malloc_count--; /* [ Malloc Count ] */
 			pos = tmp;
 		} while (pos != head);
 	}
@@ -29,7 +29,7 @@ void clean_neighbor_list(struct neighbor_list *head)
 struct neighbor_list *insert_right(struct neighbor_list *list, struct node *data)
 {
 	struct neighbor_list *newlist = (struct neighbor_list *) malloc(sizeof(struct neighbor_list));
-	malloc_count++;         // [ Malloc Count ]
+	malloc_count++;         /* [ Malloc Count ] */
 	newlist->neighbor_node = data;
 	newlist->left = list;
 	newlist->right = list->right;
@@ -67,11 +67,11 @@ struct node **_buildNodes( int width, int height, bool **matrix)
 	int i, j;
 	struct node **nodes;
 	nodes = (struct node **) malloc(height * sizeof(struct node *));
-	malloc_count++; // [ Malloc Count ]
+	malloc_count++; /* [ Malloc Count ] */
 
 	for (i = 0; i < height; i++) {
 		nodes[i] = (struct node *) malloc(width * sizeof(struct node));
-		malloc_count++; // [ Malloc Count ]
+		malloc_count++; /* [ Malloc Count ] */
 		for (j = 0; j < width; ++j) {
 			nodes[i][j] = createNode(j, i, matrix[i][j]);
 		}
@@ -112,46 +112,46 @@ struct neighbor_list *getNeighbors(struct grid *gd, struct node *nd)
 	bool d2 = false;
 	bool d3 = false;
 
-	// UP
+	/* UP */
 	if (isWalkableAt(gd, x, y - 1)) {
 		current = insert_right(current, &gd->nodes[y - 1][x]);
 		d0 = d1 = true;
 	}
 
-	// RIGHT
+	/* RIGHT */
 	if (isWalkableAt(gd, x + 1, y)) {
 		current = insert_right(current, &gd->nodes[y][x + 1]);
 		d1 = d2 = true;
 	}
 
-	// DOWN
+	/* DOWN */
 	if (isWalkableAt(gd, x, y + 1)) {
 		current = insert_right(current, &gd->nodes[y + 1][x]);
 		d2 = d3 = true;
 	}
 
-	// LEFT
+	/* LEFT */
 	if (isWalkableAt(gd, x - 1, y)) {
 		current = insert_right(current, &gd->nodes[y][x - 1]);
 		d3 = d0 = true;
 	}
 
-	// UP + LEFT
+	/* UP + LEFT */
 	if (d0 && isWalkableAt(gd, x - 1, y - 1)) {
 		current = insert_right(current, &gd->nodes[y - 1][x - 1]);
 	}
 
-	// UP + RIGHT
+	/* UP + RIGHT */
 	if (d1 && isWalkableAt(gd, x + 1, y - 1)) {
 		current = insert_right(current, &gd->nodes[y - 1][x + 1]);
 	}
 
-	// DOWN + RIGHT
+	/* DOWN + RIGHT */
 	if (d2 && isWalkableAt(gd, x + 1, y + 1)) {
 		current = insert_right(current, &gd->nodes[y + 1][x + 1]);
 	}
 
-	// DOWN + LEFT
+	/* DOWN + LEFT */
 	if (d3 && isWalkableAt(gd, x - 1, y + 1)) {
 		current = insert_right(current, &gd->nodes[y + 1][x - 1]);
 	}

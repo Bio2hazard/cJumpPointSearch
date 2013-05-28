@@ -10,7 +10,7 @@
 struct neighbor_xy_list *neighbor_xy_new()
 {
 	struct neighbor_xy_list *newlist = (struct neighbor_xy_list *) malloc(sizeof(struct neighbor_xy_list));
-	malloc_count++; // [ Malloc Count ]
+	malloc_count++; /* [ Malloc Count ] */
 	newlist->right = newlist;
 	newlist->left = newlist;
 	newlist->x = 0;
@@ -26,7 +26,7 @@ void neighbor_xy_clean(struct neighbor_xy_list *head)
 		do {
 			tmp = pos->right;
 			free(pos);
-			malloc_count--; // [ Malloc Count ]
+			malloc_count--; /* [ Malloc Count ] */
 			pos = tmp;
 		} while (pos != head);
 	}
@@ -35,7 +35,7 @@ void neighbor_xy_clean(struct neighbor_xy_list *head)
 struct neighbor_xy_list *neighbor_xy_insert_right(struct neighbor_xy_list *list, int x, int y)
 {
 	struct neighbor_xy_list *newlist = (struct neighbor_xy_list *) malloc(sizeof(struct neighbor_xy_list));
-	malloc_count++;         // [ Malloc Count ]
+	malloc_count++;         /* [ Malloc Count ] */
 	newlist->x = x;
 	newlist->y = y;
 	newlist->left = list;
@@ -66,7 +66,7 @@ struct neighbor_xy_list *_findNeighbors(struct grid *gd, struct node *activeNode
 		dx = (x - px) / max(abs(x - px), 1);
 		dy = (y - py) / max(abs(y - py), 1);
 
-		// Diagonals
+		/* Diagonals */
 		if (dx != 0 && dy != 0) {
 			if (isWalkableAt(gd, x, (y + dy))) {
 				current = neighbor_xy_insert_right(current, x, (y + dy));
@@ -84,7 +84,7 @@ struct neighbor_xy_list *_findNeighbors(struct grid *gd, struct node *activeNode
 				current = neighbor_xy_insert_right(current, (x + dx), (y - dy));
 			}
 
-			// Horizontal / Vertical
+			/* Horizontal / Vertical */
 		} else {
 			if (dx == 0) {
 				if (isWalkableAt(gd, x, (y + dy))) {
