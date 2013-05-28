@@ -1,10 +1,8 @@
-#include <malloc.h>
+#include <stdlib.h>
 
 #include "heap.h"
 #include "display.h"
 #include "jps_grid.h"
-
-#define NULL 0
 
 int cmp(struct open_list* one,struct open_list* two) {
 	int a,b;

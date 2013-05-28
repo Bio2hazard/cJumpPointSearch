@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 extern int malloc_count;
 
 // Contains all relevant information for a position in the grid

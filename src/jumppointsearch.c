@@ -1,4 +1,6 @@
-#include <iostream>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
 #include "jps_grid.h"
@@ -57,13 +59,13 @@ void test()
 		fclose(file);
 	}
 
-	struct grid* newgrid; 
-	newgrid = &createGrid(width,height,matrix); // Create a new grid
+	struct grid newgrid;
+	newgrid = createGrid(width,height,matrix); // Create a new grid
 
 	clock_t c0 = clock();
 
 	struct neighbor_xy_list * path_head = NULL;
-	path_head = findPath(newgrid,startX,startY,endX,endY);
+	path_head = findPath(&newgrid,startX,startY,endX,endY);
 	struct neighbor_xy_list * path_pos = path_head;
 	struct neighbor_xy_list * path_clean = path_head;
 
@@ -72,14 +74,16 @@ void test()
 	double runtime_diff_ms = (c1 - c0) * 1000. / CLOCKS_PER_SEC;
 
 	printf("\nPath calculation took %.0fms\n",runtime_diff_ms);
+#ifdef _WIN32
 	system("Pause");
+#endif
 	
 	// Use displayGrid to display the map without the path
 	//displayGrid(newgrid);
 
 
 	
-	path_head = smooth_path(newgrid, path_head);
+	path_head = smooth_path(&newgrid, path_head);
 	path_pos = path_head;
 	path_clean = path_head;
 
@@ -92,18 +96,18 @@ void test()
 	
 	printf("\n\n");
 	if(path_head != NULL) {
-		displaySolution(newgrid,path_head);
+		displaySolution(&newgrid,path_head);
 	}
 
 	// Cleanup - Free all created arrays.
 	neighbor_xy_clean(path_head);
 	
 	for(i = 0; i < height; i++) {
-		free(newgrid->nodes[i]);
+		free(newgrid.nodes[i]);
 		malloc_count--; // [ Malloc Count ]
 	}
 
-	free(newgrid->nodes);
+	free(newgrid.nodes);
 	malloc_count--; // [ Malloc Count ]
 	
 	for(i = 0; i < height; i++) {
@@ -114,10 +118,12 @@ void test()
 	malloc_count--; // [ Malloc Count ]
 	
 	printf("Malloc count is:%d\n",malloc_count);
+#ifdef _WIN32
 	system("Pause");
+#endif
 }
 
-void main()
+int main(int argc, char **argv)
 {
 	test();
 }

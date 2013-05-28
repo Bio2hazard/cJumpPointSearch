@@ -1,4 +1,5 @@
-#include <iostream>
+#include <stdio.h>
+#include <stdbool.h>
 
 #include "neighbors.h"
 #include "jps_grid.h"

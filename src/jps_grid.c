@@ -1,9 +1,6 @@
-#include <iostream>
 #include <malloc.h>
 
 #include "jps_grid.h"
-
-#define NULL 0
 
 struct neighbor_list * new_neighbor_list() {
 	struct neighbor_list *newlist = (struct neighbor_list*) malloc(sizeof(struct neighbor_list));

@@ -1,5 +1,9 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define min(a,b) (((a)<(b))?(a):(b))
+#define max(a,b) (((a)>(b))?(a):(b))
 
 #include "jps_grid.h"
 #include "heap.h"
@@ -10,15 +14,18 @@ using namespace std;
 #define DEBUG 0
 
 int euclidean(int dx, int dy) {
+	double distance = sqrt((double)(dx * dx + dy * dy)) * 10.0;
+	int idistance = (int)distance;
 	if(DEBUG)
-		printf("Euclidean engaged! regular:%f , (int)*10:%d\n",(sqrt(double(dx * dx + dy * dy))),int(sqrt(double(dx * dx + dy * dy))*10));
-	return int(sqrt(double(dx * dx + dy * dy))*10); // multiply by 10 and cast to int
+		printf("Euclidean engaged! regular:%lf , (int)*10:%d\n", distance, idistance);
+	return idistance;
 }
 
 int manhattan(int dx, int dy) {
+	int distance = (dx + dy) * 10;
 	if(DEBUG)
-		printf("Manhattan engaged! regular:%d        , (int)*10:%d\n",(dx+dy),(dx+dy)*10);
-	return (dx+dy)*10;
+		printf("Manhattan engaged! regular:%d        , (int)*10:%d\n",(dx+dy),distance);
+	return distance;
 }
 
 int* _jump(struct grid * gd, int x, int y, int px, int py, struct node * endNode) {
