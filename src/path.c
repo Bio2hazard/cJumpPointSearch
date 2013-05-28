@@ -42,9 +42,9 @@ int *_jump(struct grid *gd, int x, int y, int px, int py, struct node *endNode)
 			printf("	x:%d/y:%d is not walkable. Exiting _jump\n", x, y);
 		return NULL;
 	} else if (getNodeAt(gd, x, y) == endNode) {
+		int *i = (int *) malloc(2 * sizeof(int));
 		if (DEBUG)
 			printf("	_jump(1) return value: x:%d/y:%d\n", x, y);
-		int *i = (int *) malloc(2 * sizeof(int));
 		malloc_count++; /* [ Malloc Count ] */
 		i[0] = x;
 		i[1] = y;
@@ -54,9 +54,9 @@ int *_jump(struct grid *gd, int x, int y, int px, int py, struct node *endNode)
 	if (dx != 0 && dy != 0) {
 		if ((isWalkableAt(gd, (x - dx), (y + dy)) && !isWalkableAt(gd, (x - dx), y)) ||
 		    (isWalkableAt(gd, (x + dx), (y - dy)) && !isWalkableAt(gd, x, (y - dy)))) {
+			int *i = (int *) malloc(2 * sizeof(int));
 			if (DEBUG)
 				printf("	_jump(2) return value: x:%d/y:%d\n", x, y);
-			int *i = (int *) malloc(2 * sizeof(int));
 			malloc_count++;         /* [ Malloc Count ] */
 			i[0] = x;
 			i[1] = y;
@@ -66,9 +66,9 @@ int *_jump(struct grid *gd, int x, int y, int px, int py, struct node *endNode)
 		if (dx != 0) {
 			if ((isWalkableAt(gd, (x + dx), (y + 1)) && !isWalkableAt(gd, x, (y + 1))) ||
 			    (isWalkableAt(gd, (x + dx), (y - 1)) && !isWalkableAt(gd, x, (y - 1)))) {
+				int *i = (int *) malloc(2 * sizeof(int));
 				if (DEBUG)
 					printf("	_jump(3) return value: x:%d/y:%d\n", x, y);
-				int *i = (int *) malloc(2 * sizeof(int));
 				malloc_count++;         /* [ Malloc Count ] */
 				i[0] = x;
 				i[1] = y;
@@ -77,9 +77,9 @@ int *_jump(struct grid *gd, int x, int y, int px, int py, struct node *endNode)
 		} else {
 			if ((isWalkableAt(gd, (x + 1), (y + dy)) && !isWalkableAt(gd, (x + 1), y)) ||
 			    (isWalkableAt(gd, (x - 1), (y + dy)) && !isWalkableAt(gd, (x - 1), y))) {
+				int *i = (int *) malloc(2 * sizeof(int));
 				if (DEBUG)
 					printf("	_jump(4) return value: x:%d/y:%d\n", x, y);
-				int *i = (int *) malloc(2 * sizeof(int));
 				malloc_count++;         /* [ Malloc Count ] */
 				i[0] = x;
 				i[1] = y;
@@ -92,10 +92,14 @@ int *_jump(struct grid *gd, int x, int y, int px, int py, struct node *endNode)
 		if (DEBUG)
 			printf("	Recursive _jumping(1) with ( x:%d/y:%d px:%d/py:%d )\n", (x + dx), y, x, y);
 		jx = _jump(gd, (x + dx), y, x, y, endNode);
+
 		if (DEBUG)
 			printf("	Recursive _jumping(2) with ( x:%d/y:%d px:%d/py:%d )\n", x, (y + dy), x, y);
 		jy = _jump(gd, x, (y + dy), x, y, endNode);
+
 		if (jx || jy) {
+			int *i;
+
 			if (DEBUG)
 				printf("	_jump(5) return value: x:%d/y:%d\n", x, y);
 
@@ -108,7 +112,7 @@ int *_jump(struct grid *gd, int x, int y, int px, int py, struct node *endNode)
 				malloc_count--; /* [ Malloc Count ] */
 			}
 
-			int *i = (int *) malloc(2 * sizeof(int));
+			i = (int *) malloc(2 * sizeof(int));
 			malloc_count++; /* [ Malloc Count ] */
 			i[0] = x;
 			i[1] = y;
@@ -146,10 +150,10 @@ void _identifySuccessors(struct grid *gd, struct node *activeNode, struct open_l
 		if (DEBUG)
 			printf("Jump point not set!\n\n");
 		if (jumpPoint != NULL) {
+			int jx, jy, d, ng;
+			struct node *jumpNode;
 			if (DEBUG)
 				printf("Jump point set!\n\n");
-			int jx, jy;
-			struct node *jumpNode;
 			jx = jumpPoint[0];
 			jy = jumpPoint[1];
 
@@ -161,8 +165,8 @@ void _identifySuccessors(struct grid *gd, struct node *activeNode, struct open_l
 				continue;
 			}
 
-			int d = euclidean(abs(jx - activeNode->x), abs(jy - activeNode->y));
-			int ng = activeNode->g + d;
+			d = euclidean(abs(jx - activeNode->x), abs(jy - activeNode->y));
+			ng = activeNode->g + d;
 			if (!jumpNode->opened || ng < jumpNode->g) {
 				jumpNode->g = ng;
 				if (!jumpNode->h)
@@ -228,8 +232,9 @@ struct neighbor_xy_list *findPath(struct grid *gd, int startX, int startY, int e
 		activeNode->closed = true;
 
 		if (activeNode == endNode) {
+			struct neighbor_xy_list *goal;
 			ol_clean(head);
-			struct neighbor_xy_list *goal = backtrace(activeNode);
+			goal = backtrace(activeNode);
 			return goal;
 		}
 
