@@ -5,23 +5,23 @@
 #include "jps_grid.h"
 #include "heap.h"
 
-void displaySolution(struct grid *gd,struct neighbor_xy_list * path) {
-	int i,j;
+void displaySolution(struct grid *gd, struct neighbor_xy_list *path)
+{
+	int i, j;
 	bool found = false;
 	struct neighbor_xy_list *path_pos = path;
-	for(i = 0; i < gd->height; i++) {
-		for(j = 0; j < gd->width; ++j) {
-			if(gd->nodes[i][j].walkable) {
-				while(path != (path_pos = path_pos->left)) {
-					if(path_pos->y == i && path_pos->x == j) {
+	for (i = 0; i < gd->height; i++) {
+		for (j = 0; j < gd->width; ++j) {
+			if (gd->nodes[i][j].walkable) {
+				while (path != (path_pos = path_pos->left)) {
+					if (path_pos->y == i && path_pos->x == j) {
 						printf("o");
 						found = true;
 					}
 				}
-				if(!found)
+				if (!found)
 					printf(".");
-			}
-			else
+			} else
 				printf("#");
 
 			found = false;
@@ -30,11 +30,12 @@ void displaySolution(struct grid *gd,struct neighbor_xy_list * path) {
 	}
 }
 
-void displayGrid(struct grid *gd) {
-	int i,j;
-	for(i = 0; i < gd->height; i++) {
-		for(j = 0; j < gd->width; ++j) {
-			if(gd->nodes[i][j].walkable)
+void displayGrid(struct grid *gd)
+{
+	int i, j;
+	for (i = 0; i < gd->height; i++) {
+		for (j = 0; j < gd->width; ++j) {
+			if (gd->nodes[i][j].walkable)
 				printf(".");
 			else
 				printf("#");
@@ -48,24 +49,26 @@ void displayNodeInfo(struct node *n)
 	printf("x: %i ", n->x);
 	printf("\ny: %i ", n->y);
 	printf("\nf: %i ", n->f);
-	if(n->walkable)
-	printf("\nwalkable: yes\n\n");
+	if (n->walkable)
+		printf("\nwalkable: yes\n\n");
 	else
-	printf("\nwalkable: no\n\n");
+		printf("\nwalkable: no\n\n");
 }
 
-void listNeighbors(struct neighbor_list* list) {
+void listNeighbors(struct neighbor_list *list)
+{
 	struct neighbor_list *head = list;
 	struct neighbor_list *current = list;
-	while (head != (current = current->right)){
+	while (head != (current = current->right)) {
 		displayNodeInfo(current->neighbor_node);
 	}
 }
 
-void listOpenList(struct open_list* list) {
+void listOpenList(struct open_list *list)
+{
 	struct open_list *head = list;
 	struct open_list *current = list;
-	while (head != (current = current->right)){
+	while (head != (current = current->right)) {
 		displayNodeInfo(current->list_node);
 	}
 }
