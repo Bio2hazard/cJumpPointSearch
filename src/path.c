@@ -263,7 +263,6 @@ struct neighbor_xy_list *findPath(struct grid *gd, int startX, int startY, int e
 struct neighbor_xy_list *smooth_path(struct grid *gd, struct neighbor_xy_list *head)
 {
 	struct neighbor_xy_list *pos = head->left;
-	int i = 2;
 	int xi, yi, dx, dy;
 	while (head != NULL && (head != (pos = pos->left))) {
 		xi = pos->x;
