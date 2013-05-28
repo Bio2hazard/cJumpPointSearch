@@ -1,3 +1,6 @@
+#ifndef __included_neighbors_h
+#define __included_neighbors_h
+
 extern int malloc_count;
 
 /* Circular Doubly Linked List that holds X & Y coordinates instead of full nodes */
@@ -19,3 +22,5 @@ struct neighbor_xy_list *neighbor_xy_insert_right(struct neighbor_xy_list *list,
 
 /* Find all neighbors adjecent to a node ( return X/Y coordinate list, rather than full nodes ) */
 struct neighbor_xy_list *_findNeighbors(struct grid *gd, struct node *activeNode);
+
+#endif

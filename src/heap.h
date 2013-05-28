@@ -1,3 +1,6 @@
+#ifndef __included_heap_h
+#define __included_heap_h
+
 extern int malloc_count;
 
 /* Circular Doubly Linked List that contains a list of all open nodes ( nodes eligible for investigation ) */
@@ -24,3 +27,5 @@ struct open_list *ol_del_free(struct open_list *list);
 
 /* Perform a mergesort on the list ( pass & receive the list's head ) */
 struct open_list *ol_listsort(struct open_list *list);
+
+#endif

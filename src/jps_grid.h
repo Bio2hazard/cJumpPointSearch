@@ -1,3 +1,6 @@
+#ifndef __included_jps_grid_h
+#define __included_jps_grid_h
+
 #include <stdbool.h>
 
 extern int malloc_count;
@@ -60,3 +63,5 @@ void setWalkableAt(struct grid *gd, int x, int y, bool walkable);
 
 /* Return a list of neighbors in node-format */
 struct neighbor_list *getNeighbors(struct grid *gd, struct node *nd);
+
+#endif

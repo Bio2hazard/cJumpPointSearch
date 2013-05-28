@@ -1,3 +1,6 @@
+#ifndef __included_display_h
+#define __included_display_h
+
 /* Draws the grid / map */
 void displayGrid(struct grid *gd);
 
@@ -12,3 +15,5 @@ void listNeighbors(struct neighbor_list *list);
 
 /* Lists all entry in the open list ( contains eligible nodes for inspection ) */
 void listOpenList(struct open_list *list);
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef __included_path_h
+#define __included_path_h
+
 /* Check path.cpp for the option of turning on debug output! */
 
 /* for counting mallocs: */
@@ -21,3 +24,5 @@ struct neighbor_xy_list *findPath(struct grid *gd, int startX, int startY, int e
 
 /* Smoothens the path */
 struct neighbor_xy_list *smooth_path(struct grid *gd, struct neighbor_xy_list *head);
+
+#endif
