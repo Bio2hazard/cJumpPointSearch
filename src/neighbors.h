@@ -1,6 +1,8 @@
 #ifndef __included_neighbors_h
 #define __included_neighbors_h
 
+#include "jps_grid.h"
+
 extern int malloc_count;
 
 /* Circular Doubly Linked List that holds X & Y coordinates instead of full nodes */

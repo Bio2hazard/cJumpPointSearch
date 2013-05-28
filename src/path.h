@@ -1,6 +1,9 @@
 #ifndef __included_path_h
 #define __included_path_h
 
+#include "jps_grid.h"
+#include "heap.h"
+
 /* Check path.cpp for the option of turning on debug output! */
 
 /* for counting mallocs: */

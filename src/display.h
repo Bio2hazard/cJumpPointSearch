@@ -1,6 +1,10 @@
 #ifndef __included_display_h
 #define __included_display_h
 
+#include "jps_grid.h"
+#include "neighbors.h"
+#include "heap.h"
+
 /* Draws the grid / map */
 void displayGrid(struct grid *gd);
 
